@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+</head>
+<body>
+    <table align="center" border="1" id="example">
+        <div align="center"><h2>员工请假单</h2></div>
+        <tr>
+            <th>紧急情况</th>
+            <th>请假人</th>
+            <th>标题</th>
+            <th>请假原因</th>
+        </tr>
+    </table>
+    <div align="center"><input type="button" id="comit" value="生成excel"/></div>
+    <div align="center"><input type="button" id="upload" value="导入excel"/></div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        showLeave();
+    });
+
+    $("#comit").bind("click", function () {
+        location.href="/user/change";
+    });
+
+    $("#upload").bind("click", function () {
+        location.href="/upload.html";
+    });
+
+    function showLeave(){
+        $.ajax({
+            "url":"/user/find",
+            "type":"get",
+            "dataType":"json",
+            "success":function(json) {
+                if (json != null) {
+                    var list = json;
+
+                    console.log("count=" + list.length);
+                    for (var i = 0; i < list.length; i++) {
+                        var html = '<tr>'
+                            +'<td>#{deeply}</td>'
+                            +'<td><span>#{empId}</span></td>'
+                            +'<td><span>#{title}</span></td>'
+                            +'<td><span>#{reason}</span></td>'
+                            +'</tr>';
+                        html = html.replace(/#{deeply}/g, list[i].deeply);
+                        html = html.replace(/#{empId}/g, list[i].empId);
+                        html = html.replace(/#{title}/g, list[i].title);
+                        html = html.replace(/#{reason}/g, list[i].reason);
+                        $("#example").append(html);
+                    }
+                } else {
+                    alert(json.message);
+                }
+            }
+        });
+    }
+</script>
+
+</html>

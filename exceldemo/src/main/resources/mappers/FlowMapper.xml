@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.example.exceldemo.mapper.DemoMapper">
+	<resultMap type="com.example.exceldemo.entity.OaLeave" id="FlowEntityMap">
+ 		<id column="leave_id" property="leaveId"/>
+		<result column="add_date" property="addDate"/>
+		<result column="deeply" property="deeply"/>
+		<result column="audit_info" property="auditInfo"/>
+		<result column="current_node" property="currentNode"/>
+		<result column="emp_id" property="empId"/>
+		<result column="emp_name" property="empName"/>
+		<result column="end_date" property="endDate"/>
+		<result column="start_date" property="startDate"/>
+		<result column="fid" property="fid"/>
+		<result column="reason" property="reason"/>
+		<result column="remark" property="remark"/>
+		<result column="state" property="state"/>
+		<result column="title" property="title"/>
+		<result column="tolol" property="tolol"/>
+		<result column="type" property="type"/>
+		<result column="audit_state" property="auditState"/>
+ 	</resultMap>
+
+
+	
+	<!-- 根据当前员工id查找员工请假表 -->
+	<!-- List<OaLeave> findAllLeaveByEmpId(Integer empId) -->
+	<select id="findAllLeaveByEmpId" resultMap="FlowEntityMap">
+		SELECT * FROM
+			oa_leave 
+		WHERE 
+			emp_id=#{empId} 
+	</select>
+
+
+</mapper>
